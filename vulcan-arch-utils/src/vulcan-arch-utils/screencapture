@@ -1,0 +1,61 @@
+#!/bin/bash
+
+OPTIND=1
+
+while getopts "cs" opt; do
+    case "$opt" in
+    c)  cast=1
+        ;;
+    s)  selection=1
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+[ "$1" = "--" ] && shift
+
+temp="/tmp/$USER"
+mkdir -p "$temp"
+chmod 700 "$temp"
+
+function resume_prompt {
+    printf "\n\033[0;37mPress any key to continue...\n\033[0m\n"
+    read -rn 1
+}
+
+function take_screenshot {
+    mkdir -p "$temp/screenshots"
+    screenshot="$temp/screenshots/$(date +%Y%m%d_%H%M%S).png"
+
+    if [ "$selection" == 1 ]; then
+        maim -s -l -c 1,0,0,0.2 --format=png "$screenshot"
+    else
+        maim --format=png "$screenshot"
+    fi
+
+    xclip -selection clipboard -t image/png "$screenshot"
+}
+
+function take_screencast {
+    if [ -f "$temp/screencast_raw.mkv" ]; then
+        rm "$temp/screencast_raw.mkv"
+    fi
+
+    if [ "$selection" == 1 ]; then
+        read -r X Y W H G ID < <(slop -l -c 1,0,0,0.2 -f "%x %y %w %h %g %i")
+        resume_prompt
+        ffmpeg -f x11grab -s "$W"x"$H" -i ":0.0+$X,$Y" -vcodec huffyuv -preset ultrafast -qp 0 "$temp/screencast_raw.mkv"
+    else
+        resume_prompt
+        ffmpeg -f x11grab -s 1920x1080 -i ":0.0+0,0" -vcodec huffyuv -preset ultrafast -qp 0 "$temp/screencast_raw.mkv"
+    fi
+
+    ffmpeg -i "$temp/screencast_raw.mkv" -c:v libx265 -preset slow -crf 25 "$HOME/screencast.mkv"
+    rm "$temp/screencast_raw.mkv"
+}
+
+if [ "$cast" != 1 ]; then
+    take_screenshot
+else
+    take_screencast
+fi

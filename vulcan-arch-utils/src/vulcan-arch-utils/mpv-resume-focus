@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ `echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpvsocket | grep false` ]; then
+    if ! [ `xdotool search --onlyvisible --class mpv` ]; then
+        echo '{ "command": ["set_property", "pause", true] }' | socat - /tmp/mpvsocket
+    fi
+else
+    if [ `xdotool search --onlyvisible --class mpv` ]; then
+        echo '{ "command": ["set_property", "pause", false] }' | socat - /tmp/mpvsocket
+    fi
+fi

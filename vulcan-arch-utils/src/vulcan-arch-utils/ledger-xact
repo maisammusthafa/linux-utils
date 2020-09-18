@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+import re
+import sys
+import time
+
+from subprocess import check_output
+
+output = check_output(["ledger", "print", "--date-format", "%Y/%m/%d", "--tail", "1", "payee", sys.argv[1]]).decode("utf-8")
+output = re.sub(r"\d\d\d\d/\d\d/\d\d", time.strftime('%Y/%m/%d'), output)
+output = re.sub(r"(\.\d\d)\n\s*;", "\\1\n        ;", output)
+
+print(output)

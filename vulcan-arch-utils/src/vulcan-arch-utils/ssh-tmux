@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export TERM=screen-256color
+
+if [ -z "$2" ]; then
+    port=22
+else
+    port="$2"
+fi
+
+ssh "$1" -p "$port" -t "tmux attach || tmux"

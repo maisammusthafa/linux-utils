@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -$1 == "--u" ]; then
+    sudo veracrypt -d
+    exit
+fi
+
+key=$(head -n 1 ~/.veracrypt-keypath)
+
+pass show "crypto/VeraCrypt/Laptop_Backup" | head -n 1 | sudo veracrypt -t --non-interactive --stdin --protect-hidden=no -k "$key" "/run/media/$USER/FX/Backups/laptop.hc"

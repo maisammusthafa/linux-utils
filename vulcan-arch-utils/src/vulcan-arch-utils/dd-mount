@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -$1 == "--u" ]; then
+    DIRS=($( ls -1p /mnt | grep "^loop[0-9]p[0-9]/$" | sed 's/^\(.*\)/"\1"/') )
+    for i in "${DIRS[@]}"
+    do
+        DIR=(`echo $i | tr -d '"' | sed 's/.$//'`)
+        sudo umount /mnt/$DIR
+        sudo losetup -d /dev/${DIR::-2}
+        sudo rm -rf /mnt/$DIR
+    done
+    exit
+fi
+
+DEV="$(sudo losetup --partscan --find --show "$1")"
+PART=$DEV"p"$2
+BASE=$(basename "$PART")
+
+sudo mkdir /mnt/$BASE
+sudo mount $PART /mnt/$BASE

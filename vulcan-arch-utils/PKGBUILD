@@ -1,0 +1,34 @@
+# Maintainer: Maisam Musthafa <maisam.musthafa@gmail.com>
+
+pkgname=vulcan-arch-utils
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Utilities for Arch Linux on vulcan"
+arch=('any')
+license=('GPL')
+
+package() {
+  cd "$srcdir/$pkgname"
+  install -Dm755 backup                      "$pkgdir/usr/bin/backup"
+  install -Dm755 browser                     "$pkgdir/usr/bin/browser"
+  install -Dm755 dd-mount                    "$pkgdir/usr/bin/dd-mount"
+  install -Dm755 dmenu-unmount               "$pkgdir/usr/bin/dmenu-unmount"
+  install -Dm755 flashgot-custom             "$pkgdir/usr/bin/flashgot-custom"
+  install -Dm755 journalctl-ccze             "$pkgdir/usr/bin/journalctl-ccze"
+  install -Dm755 ledger-shopping             "$pkgdir/usr/bin/ledger-shopping"
+  install -Dm755 ledger-xact                 "$pkgdir/usr/bin/ledger-xact"
+  install -Dm755 lock                        "$pkgdir/usr/bin/lock"
+  install -Dm755 mpc-dmenu                   "$pkgdir/usr/bin/mpc-dmenu"
+  install -Dm755 mpv-resume-focus            "$pkgdir/usr/bin/mpv-resume-focus"
+  install -Dm755 octave-gui                  "$pkgdir/usr/bin/octave-gui"
+  install -Dm755 pass-autotype               "$pkgdir/usr/bin/pass-autotype"
+  install -Dm755 pass-autotype-dmenu         "$pkgdir/usr/bin/pass-autotype-dmenu"
+  install -Dm755 passmenu                    "$pkgdir/usr/bin/passmenu"
+  install -Dm755 screencapture               "$pkgdir/usr/bin/screencapture"
+  install -Dm755 ssh-tmux                    "$pkgdir/usr/bin/ssh-tmux"
+  install -Dm755 telegram                    "$pkgdir/usr/bin/telegram"
+  install -Dm755 tv-tools                    "$pkgdir/usr/bin/tv-tools"
+  install -Dm755 updateaur                   "$pkgdir/usr/bin/updateaur"
+  install -Dm755 veracrypt-mount             "$pkgdir/usr/bin/veracrypt-mount"
+  install -Dm755 vidir                       "$pkgdir/usr/bin/vidir"
+}

@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+# TODO: Total value should be properly zero-padded
+
+import re
+import sys
+
+pattern_account = re.compile("^[A-Z].*")
+pattern_posting = re.compile("^\s.*")
+account = None
+tags = None
+total = 0
+lines = sys.stdin.read().splitlines()
+
+for line in lines:
+    if pattern_account.match(line):
+        account = line.split(' ', 1)[0]
+        tags = line.split()[-1]
+    elif pattern_posting.match(line):
+        value = line.split()[-1]
+        description = line.lstrip().rsplit(' ', 1)[0]
+        print(' ' * 4 + "Expenses:" + account + ' ' * 24 + "INR " + value)
+        print(' ' * 8 + "; Payee: " + description)
+        print(' ' * 8 + "; " + tags)
+        total = total + float(value)
+    else:
+        print(' ' * 4 + "Assets:Cash INR" + ' ' * 24 + "INR -" + str(total))
+        print(' ' * 8 + "; " + tags)
+        total = 0

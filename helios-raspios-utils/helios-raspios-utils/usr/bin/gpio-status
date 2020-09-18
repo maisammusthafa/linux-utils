@@ -1,0 +1,74 @@
+#!/bin/bash
+
+h1=" +-----+-----+---------+------+---+---Pi 2---+---+------+---------+-----+-----+\n"
+h2=" | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |\n"
+h3=" +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+\n"
+
+declare -ag mode
+declare -ag value
+
+main () {
+    display() {
+        row=("$@")
+        printf " |${row[0]}|${row[1]}|${row[2]}|${row[3]}|${row[4]}|${row[5]}||${row[6]}|${row[7]}|${row[8]}|${row[9]}|${row[10]}|${row[11]}|\n"
+    }
+
+
+    for i in {0..27}
+    do
+        case "$(pigs mg $i)" in
+            0)
+                mode[$i]="\033[0;36m   IN \033[0m"
+                ;;
+            1)
+                mode[$i]="\033[0;32m  OUT \033[0m"
+                ;;
+            4)
+                mode[$i]="\033[0;35m ALT0 \033[0m"
+                ;;
+        esac
+        if [[ "$(pigs r $i)" -eq 0 ]]; then
+            value[$i]="\033[1;34m 0 \033[0m"
+        else
+            value[$i]="\033[1;31m 1 \033[0m"
+        fi
+    done
+
+    declare -a r00=('     ' '     ' '    3.3v ' '      ' '   ' '  1 ' ' 2  ' '   ' '      ' ' 5v      ' '     ' '     ')
+    declare -a r01=('   2 ' '   8 ' '   SDA.1 ' "${mode[2]}" "${value[2]}" '  3 ' ' 4  ' '   ' '      ' ' 5v      ' '     ' '     ')
+    declare -a r02=('   3 ' '   9 ' '   SCL.1 ' "${mode[3]}" "${value[3]}" '  5 ' ' 6  ' '   ' '      ' ' 0v      ' '     ' '     ')
+    declare -a r03=('   4 ' '   7 ' ' GPIO. 7 ' "${mode[4]}" "${value[4]}" '  7 ' ' 8  ' "${value[14]}" "${mode[14]}" ' TxD     ' ' 15  ' ' 14  ')
+    declare -a r04=('     ' '     ' '      0v ' '      ' '   ' '  9 ' ' 10 ' "${value[15]}" "${mode[15]}" ' RxD     ' ' 16  ' ' 15  ')
+    declare -a r05=('  17 ' '   9 ' ' GPIO. 0 ' "${mode[17]}" "${value[17]}" ' 11 ' ' 12 ' "${value[18]}" "${mode[18]}" ' GPIO. 1 ' ' 1   ' ' 18  ')
+    declare -a r06=('  27 ' '   2 ' ' GPIO. 2 ' "${mode[27]}" "${value[27]}" ' 13 ' ' 14 ' '   ' '      ' ' 0v      ' '     ' '     ')
+    declare -a r07=('  22 ' '   3 ' ' GPIO. 3 ' "${mode[22]}" "${value[22]}" ' 15 ' ' 16 ' "${value[23]}" "${mode[23]}" ' GPIO. 4 ' ' 4   ' ' 23  ')
+    declare -a r08=('     ' '     ' '    3.3v ' '      ' '   ' ' 17 ' ' 18 ' "${value[24]}" "${mode[24]}" ' GPIO. 5 ' ' 5   ' ' 24  ')
+    declare -a r09=('  10 ' '  12 ' '    MOSI ' "${mode[10]}" "${value[10]}" ' 19 ' ' 20 ' '   ' '      ' ' 0v      ' '     ' '     ')
+    declare -a r10=('   9 ' '  13 ' '    MISO ' "${mode[9]}" "${value[9]}" ' 21 ' ' 22 ' "${value[25]}" "${mode[25]}" ' GPIO. 6 ' ' 6   ' ' 25  ')
+    declare -a r11=('  11 ' '  14 ' '    SCLK ' "${mode[11]}" "${value[11]}" ' 23 ' ' 24 ' "${value[8]}" "${mode[8]}" ' CE0     ' ' 10  ' ' 8   ')
+    declare -a r12=('     ' '     ' '      0v ' '      ' '   ' ' 25 ' ' 26 ' "${value[7]}" "${mode[7]}" ' CE1     ' ' 11  ' ' 7   ')
+    declare -a r13=('   0 ' '  30 ' '   SDA.0 ' "${mode[0]}" "${value[0]}" ' 27 ' ' 28 ' "${value[1]}" "${mode[1]}" ' SCL.0   ' ' 31  ' ' 1   ')
+    declare -a r14=('   5 ' '  21 ' ' GPIO.21 ' "${mode[5]}" "${value[5]}" ' 29 ' ' 30 ' '   ' '      ' ' 0v      ' '     ' '     ')
+    declare -a r15=('   6 ' '  22 ' ' GPIO.22 ' "${mode[6]}" "${value[6]}" ' 31 ' ' 32 ' "${value[12]}" "${mode[12]}" ' GPIO.26 ' ' 26  ' ' 12  ')
+    declare -a r16=('  13 ' '  23 ' ' GPIO.23 ' "${mode[13]}" "${value[13]}" ' 33 ' ' 34 ' '   ' '      ' ' 0v      ' '     ' '     ')
+    declare -a r17=('  19 ' '  24 ' ' GPIO.24 ' "${mode[19]}" "${value[19]}" ' 35 ' ' 36 ' "${value[16]}" "${mode[16]}" ' GPIO.27 ' ' 27  ' ' 16  ')
+    declare -a r18=('  26 ' '  25 ' ' GPIO.25 ' "${mode[26]}" "${value[26]}" ' 37 ' ' 38 ' "${value[20]}" "${mode[20]}" ' GPIO.28 ' ' 28  ' ' 20  ')
+    declare -a r19=('     ' '     ' '      0v ' '      ' '   ' ' 39 ' ' 40 ' "${value[21]}" "${mode[21]}" ' GPIO.29 ' ' 29  ' ' 21  ')
+
+    printf "$h1"
+    printf "$h2"
+    printf "$h3"
+
+    for i in {00..19}
+    do
+        arr="r$i[@]"
+        arr=("${!arr}")
+        display "${arr[@]}"
+    done
+
+    printf "$h3"
+    printf "$h2"
+    printf "$h1"
+}
+
+main

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ -z $(pgrep "telegram-cli") ]; then
+    `alacritty --hold -t telegram-cli -e telegram-cli -W` &
+    #`termite --hold -t telegram-cli -e "telegram-cli -W -s /usr/bin/telegram-actions.lua"` &
+fi
+
+PIDS=$(xdotool search --class "Alacritty")
+
+#EXISTS=0
+#for PID in $PIDS; do
+#    TITLE=$(xdotool getwindowname $PID)
+#    if [[ $TITLE == *"journalctl"* ]]; then
+#        EXISTS=1
+#        break
+#    fi
+#done
+
+#if [ $EXISTS == 0 ]; then
+#    `termite -t "journalctl" -e "journalctl-ccze"` &
+#fi
+
+telegram-desktop &
+sleep 2
+
+EXISTS=0
+
+for PID in $PIDS; do
+    TITLE=$(xdotool getwindowname $PID)
+    if [[ $TITLE == *"mpd"* ]]; then
+        EXISTS=1
+        break
+    fi
+done
+
+if [ $EXISTS == 0 ]; then
+    `alacritty -t "mpd" -e ncmpcpp` &
+fi

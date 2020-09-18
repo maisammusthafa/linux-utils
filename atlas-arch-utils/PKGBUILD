@@ -1,0 +1,15 @@
+# Maintainer: Maisam Musthafa <maisam.musthafa@gmail.com>
+
+pkgname=atlas-arch-utils
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Utilities for Arch Linux on atlas"
+arch=('any')
+license=('GPL')
+
+package() {
+  cd "$srcdir/$pkgname"
+  install -Dm755 backup                      "$pkgdir/usr/bin/backup"
+  install -Dm755 updateaur                   "$pkgdir/usr/bin/updateaur"
+  install -Dm755 vidir                       "$pkgdir/usr/bin/vidir"
+}

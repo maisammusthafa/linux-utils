@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ "$2" =~ /$ ]]; then
+    exit
+fi
+
+patterns=$(openssl rsautl -decrypt -inkey $HOME/.ssh/misc/misc_rsa -in $HOME/.ssh/misc/https_auth)
+i_url=$(echo "$2" | sed -e 's/\(.*:\/\/\)\(.*@\)\(.*\)/\1\3/')
+i_domain=$(echo $i_url | awk -F / '{print $1"//"$3"/"}')
+
+for pattern in $patterns; do
+    o_domain=$(echo $pattern | sed -e 's/\(.*:\/\/\)\(.*\)@\(.*\)/\1\3/')
+    if [[ "$o_domain" == "$i_domain" ]]; then
+        o_domain=${o_domain//\//\\/}
+        pattern=${pattern//\//\\/}
+        i_url=$(echo $i_url | sed -e "s/$o_domain/$pattern/")
+        break
+    fi
+done
+
+case $1 in
+    '--aria2-helios')
+        narnia -c=helios "$i_url";;
+    '--aria2-vulcan')
+        narnia -c=localhost "$i_url";;
+    '--aria2-atlas')
+        narnia -c=atlas "$i_url";;
+    '--clipboard')
+        echo $i_url | xargs echo -n | xclip -selection c;;
+esac
+
+# encryption
+#openssl rsautl -encrypt -pubin -inkey $HOME/.ssh/misc/misc_rsa.pem.pub -ssl -in pwd.txt -out $HOME/.ssh/misc/https_auth

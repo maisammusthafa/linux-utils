@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+
+import os
+import shutil
+import sys
+
+from subprocess import call
+
+ren_options = "-b"
+delete = False
+action = sys.argv[1][0:2]
+i_file = sys.argv[2]
+current = sys.argv[3]
+total = sys.argv[4]
+name = os.path.splitext(i_file)[0]
+
+if sys.argv[1][3:4] == "d":
+    delete = True
+if sys.argv[1][2:3] == "d":
+    delete = True
+elif sys.argv[1][2:3] == "m":
+    ren_options = "-bm"
+
+def subtitle():
+    print("File " + str(current) + "/" + str(total) + "\n")
+    call("subliminal download -v -hi -s -l en " + "\"" + i_file + "\"", shell=True)
+    print()
+
+def mux(all):
+    print("File " + str(current) + "/" + str(total) + "\n")
+    if os.path.isfile(name + ".srt"):
+        o_file = name + "_muxed.mkv"
+        i_sub = name + ".srt"
+        returncode = call("mkvmerge --ui-language en_US --output \"" + o_file + "\" --no-subtitles --language 0:und --default-track 0:yes --language 1:und --default-track 1:yes '(' \"" + i_file + "\" ')' --language 0:und '(' \"" + i_sub + "\" ')' --track-order 0:0,0:1,1:0", shell=True)
+        if returncode == 0:
+            if delete:
+                os.remove(i_file)
+                os.remove(i_sub)
+            else:
+                if not os.path.exists("_source_files"):
+                    os.makedirs("_source_files")
+                shutil.move(i_file, "_source_files/" + i_file)
+                shutil.move(i_sub, "_source_files/" + i_sub)
+            if all != True:
+                os.rename(o_file, i_file)
+        print()
+
+def rename():
+    print("File " + str(current) + "/" + str(total) + "\n")
+    call("tvnamer " + ren_options + " " + "\"" + i_file + "\"", shell=True)
+    print()
+
+def move():
+    print("File " + str(current) + "/" + str(total) + "\n")
+    call("subliminal download -v -hi -s -l en " + i_file, shell=True)
+    print()
+
+def main():
+    global i_file
+    extension = os.path.splitext(i_file)[1]
+
+    if extension == ".rar":
+        call("dtrx --one=here " + "\"" + i_file + "\"", shell=True)
+        if os.path.isfile(name + ".mkv"):
+            if delete:
+                os.remove(i_file)
+            else:
+                if not os.path.exists("_source_files"):
+                    os.makedirs("_source_files")
+                shutil.move(i_file, "_source_files/" + i_file)
+            i_file = name + ".mkv"
+        else:
+            return
+    elif extension != ".mkv" and extension != ".mp4":
+        return
+
+    if action == "-s":
+        subtitle()
+    elif action == "-m":
+        mux(False)
+    elif action == "-r":
+        rename()
+    elif action == "-m":
+        move()
+    elif action == "-a":
+        subtitle()
+        mux(True)
+        i_file = name + "_muxed.mkv"
+        if not os.path.isfile(i_file):
+            return
+        rename()
+
+main()

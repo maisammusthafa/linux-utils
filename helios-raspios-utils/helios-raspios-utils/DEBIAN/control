@@ -1,0 +1,5 @@
+Package: helios-raspios-utils
+Maintainer: Maisam Musthafa <maisam.musthafa@gmail.com>
+Architecture: armhf
+Version: 1.0
+Description: Utilities for Raspberry Pi OS on helios
