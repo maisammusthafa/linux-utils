@@ -1,3 +1,4 @@
 pkg/
+**/helios-raspios-utils/usr/bin/
 *.tar.zst
 *.deb
