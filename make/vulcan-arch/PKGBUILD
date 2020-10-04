@@ -30,5 +30,4 @@ package() {
   install -Dm755 tv-tools                    "$pkgdir/usr/bin/tv-tools"
   install -Dm755 updateaur                   "$pkgdir/usr/bin/updateaur"
   install -Dm755 veracrypt-mount             "$pkgdir/usr/bin/veracrypt-mount"
-  install -Dm755 vidir                       "$pkgdir/usr/bin/vidir"
 }
