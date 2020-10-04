@@ -1,5 +1,4 @@
 #!/bin/bash
 
-#SONG=$(mpc playlist -f '%position%. %artist% - %title%' | dmenu -i -b -h 19 -fn 'DejaVu Sans Mono-9' -nb '#000000' -nf '#888888' -sb '#263238' "$@" | sed -e 's/^\([0-9]*\).*$/\1/')
 SONG=$(mpc playlist -f '%position%. %artist% - %title%' | rofi -dmenu -i -p "Song: " "$@" | sed -e 's/^\([0-9]*\).*$/\1/')
 [ -n "$SONG" ] && mpc play "$SONG"
