@@ -25,24 +25,24 @@ xinput --disable 'SynPS/2 Synaptics TouchPad'
 
 i3lock -e -n -i "$HOME/Documents/wallpapers/login_bg.png" \
     --clock \
-    --datestr='%A, %d-%b-%Y' \
-    --timecolor=ffffffff \
-    --datecolor=ffffffff \
-    --linecolor=00000000 \
-    --linecolor=00000000 \
-    --insidevercolor=00000000 \
-    --insidewrongcolor=00000000 \
-    --insidecolor=00000000 \
-    --ringvercolor=00000000 \
-    --ringwrongcolor=00000000 \
-    --ringcolor=00000000 \
-    --verifcolor=ffffffff \
-    --wrongcolor=ffffffff \
-    --layoutcolor=ffffffff \
-    --ringcolor=00000000 \
-    --separatorcolor=00000000 \
-    --keyhlcolor=00000000 \
-    --bshlcolor=00000000 \
+    --date-str='%A, %d-%b-%Y' \
+    --time-color=ffffffff \
+    --date-color=ffffffff \
+    --line-color=00000000 \
+    --line-color=00000000 \
+    --insidever-color=00000000 \
+    --insidewrong-color=00000000 \
+    --inside-color=00000000 \
+    --ringver-color=00000000 \
+    --ringwrong-color=00000000 \
+    --ring-color=00000000 \
+    --verif-color=ffffffff \
+    --wrong-color=ffffffff \
+    --layout-color=ffffffff \
+    --ring-color=00000000 \
+    --separator-color=00000000 \
+    --keyhl-color=00000000 \
+    --bshl-color=00000000 \
     --composite
 
 xset -dpms

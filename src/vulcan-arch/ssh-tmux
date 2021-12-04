@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export TERM=screen-256color
+export TERM=xterm
 
 if [ -z "$2" ]; then
     port=22

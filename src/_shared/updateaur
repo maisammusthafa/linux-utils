@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cache="$HOME/.cache/yay"
+cache="$HOME/.cache/paru"
 
 array=($( ls -1p $cache | grep / | sed 's/^\(.*\)/"\1"/') )
 list=$(pacman -Qqm)
@@ -16,7 +16,7 @@ do
 done
 printf "$newline"
 
-yay -Syu --devel --overwrite '*' --sudoloop  --noanswerdiff --noansweredit --noconfirm
+paru -Syu --devel --sudoloop --noconfirm --overwrite '*'
 
 cd $cache
 for directory in */; do
