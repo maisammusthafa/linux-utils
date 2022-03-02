@@ -12,7 +12,7 @@ for PID in $PIDS; do
 done
 
 if [ $EXISTS == 0 ]; then
-    `termite -t "journalctl" -e "journalctl-ccze"` &
+    `alacritty -t "journalctl" -e "journalctl-ccze"` &
 fi
 
 telegram-desktop &
