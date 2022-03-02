@@ -8,7 +8,7 @@ target := 'helios-raspbian'
 .PHONY: install
 
 install:
-	@MACHINE="$$(hostname)-$$(sed -n 's/^ID=//p' /etc/*release)"; \
+	@MACHINE="$$(hostnamectl hostname)-$$(sed -n 's/^ID=//p' /etc/*release)"; \
 	if [ "$$MACHINE" == $(target) ]; then \
 		mkdir -p $(bin); \
 		rsync -aL --delete $(src)/ $(bin)/; \

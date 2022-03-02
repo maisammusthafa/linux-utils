@@ -20,10 +20,9 @@ if [ -$1 != '--s' ]; then
 fi
 
 xinput --disable 'pointer:Logitech B330/M330/M3'
-xinput --disable 'pointer:Razer Razer DeathAdder Chroma'
-xinput --disable 'SynPS/2 Synaptics TouchPad'
+xinput --disable 'DLL0945:00 06CB:CDE6 Touchpad'
 
-i3lock -e -n -i "$HOME/Documents/wallpapers/login_bg.png" \
+i3lock -e -n -i "$HOME/documents/wallpapers/login_bg.png" \
     --clock \
     --date-str='%A, %d-%b-%Y' \
     --time-color=ffffffff \
@@ -43,13 +42,15 @@ i3lock -e -n -i "$HOME/Documents/wallpapers/login_bg.png" \
     --separator-color=00000000 \
     --keyhl-color=00000000 \
     --bshl-color=00000000 \
-    --composite
+    --composite \
+    --time-pos="w/2:h/2-50" \
+    --ind-pos="w/2:h/2-50" \
+    --wrong-text="invalid password"
 
 xset -dpms
 #xautolock -enable
 xautolock -time 10 -locker 'lock -a' -detectsleep &
 pkill -u "$USER" -USR2 dunst
 
-xinput --enable 'SynPS/2 Synaptics TouchPad'
-xinput --enable 'pointer:Razer Razer DeathAdder Chroma'
+xinput --enable 'DLL0945:00 06CB:CDE6 Touchpad'
 xinput --enable 'pointer:Logitech B330/M330/M3'

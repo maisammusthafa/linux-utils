@@ -10,6 +10,7 @@ license=('GPL')
 package() {
   cd "$srcdir/$pkgname"
   install -Dm755 backup                      "$pkgdir/usr/bin/backup"
+  install -Dm755 bluetooth-toggle            "$pkgdir/usr/bin/bluetooth-toggle"
   install -Dm755 dd-mount                    "$pkgdir/usr/bin/dd-mount"
   install -Dm755 flashgot-custom             "$pkgdir/usr/bin/flashgot-custom"
   install -Dm755 journalctl-ccze             "$pkgdir/usr/bin/journalctl-ccze"

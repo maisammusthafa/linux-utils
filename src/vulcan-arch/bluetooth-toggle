@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DEVICE='18:54:CF:10:EA:F3'
+STATUS=$(bluetoothctl info $DEVICE | awk '/Connected:/{ print $2 }')
+
+if [ $STATUS == 'no' ]; then
+    bluetoothctl connect $DEVICE
+else
+    bluetoothctl disconnect $DEVICE
+fi

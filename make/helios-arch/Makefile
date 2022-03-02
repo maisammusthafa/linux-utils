@@ -6,7 +6,7 @@ target = 'helios-arch'
 .PHONY: install
 
 install:
-	@MACHINE="$$(hostname)-$$(sed -n 's/^ID=//p' /etc/*release)"; \
+	@MACHINE="$$(hostnamectl hostname)-$$(sed -n 's/^ID=//p' /etc/*release)"; \
 	if [ "$$MACHINE" == $(target) ]; then \
 		makepkg -f; \
 		sudo pacman -U $(pkgname); \
