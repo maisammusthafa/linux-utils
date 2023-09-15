@@ -19,7 +19,7 @@ if [ -$1 != '--s' ]; then
     xset dpms force off
 fi
 
-xinput --disable 'pointer:Logitech B330/M330/M3'
+#xinput --disable 'pointer:Logitech B330/M330/M3'
 xinput --disable 'DLL0945:00 06CB:CDE6 Touchpad'
 
 i3lock -e -n -i "$HOME/documents/wallpapers/login_bg.png" \
@@ -53,4 +53,4 @@ xautolock -time 10 -locker 'lock -a' -detectsleep &
 pkill -u "$USER" -USR2 dunst
 
 xinput --enable 'DLL0945:00 06CB:CDE6 Touchpad'
-xinput --enable 'pointer:Logitech B330/M330/M3'
+#xinput --enable 'pointer:Logitech B330/M330/M3'

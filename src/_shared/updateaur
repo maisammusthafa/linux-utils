@@ -16,7 +16,7 @@ do
 done
 printf "$newline"
 
-paru -Syu --devel --sudoloop --noconfirm --overwrite '*'
+paru -Syyu --devel --sudoloop --noconfirm --overwrite '*'
 
 cd $cache
 for directory in */; do
