@@ -9,6 +9,6 @@ license=('GPL')
 
 package() {
   cd "$srcdir/$pkgname"
-  install -Dm755 backup                      "$pkgdir/usr/bin/backup"
+  install -Dm755 ubackup                     "$pkgdir/usr/bin/ubackup"
   install -Dm755 updateaur                   "$pkgdir/usr/bin/updateaur"
 }

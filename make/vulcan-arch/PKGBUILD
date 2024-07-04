@@ -9,7 +9,6 @@ license=('GPL')
 
 package() {
   cd "$srcdir/$pkgname"
-  install -Dm755 backup                      "$pkgdir/usr/bin/backup"
   install -Dm755 bluetooth-toggle            "$pkgdir/usr/bin/bluetooth-toggle"
   install -Dm755 dd-mount                    "$pkgdir/usr/bin/dd-mount"
   install -Dm755 flashgot-custom             "$pkgdir/usr/bin/flashgot-custom"
@@ -24,6 +23,7 @@ package() {
   install -Dm755 ssh-tmux                    "$pkgdir/usr/bin/ssh-tmux"
   install -Dm755 telegram                    "$pkgdir/usr/bin/telegram"
   install -Dm755 tv-tools                    "$pkgdir/usr/bin/tv-tools"
+  install -Dm755 ubackup                     "$pkgdir/usr/bin/ubackup"
   install -Dm755 updateaur                   "$pkgdir/usr/bin/updateaur"
   install -Dm755 veracrypt-mount             "$pkgdir/usr/bin/veracrypt-mount"
 }
